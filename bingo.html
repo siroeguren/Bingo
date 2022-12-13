@@ -1,0 +1,163 @@
+<script>
+
+const NUMFILAS = 5;
+const NUMEROCARTONES = 1;
+let noRepeat;
+let arrayRepeat = [];
+
+class Carton
+{
+    id;
+    rows = 5;
+    rowNumbers = new Array();
+
+    getId() {return this.id;}
+    setId(n) {this.id = n}
+    
+    getRows() {return this.rows;}
+    setRows(n) {this.rows = n}
+
+    getRowNumbers() {return this.rowNumbers;}
+    setRowNumbers(n) {this.rowNumbers = n}
+    
+
+    constructor(id)
+    {
+        this.id = id;
+        this.rowNumbers = crearFilas();
+        Object.seal(this);
+    }
+
+}
+
+function generarNumero(arrayCartones)
+{
+    let arrayBombo = [];
+    let contadorBingo = 0;
+
+    let locutor = setInterval(() => 
+    {
+        let bombo =  Math.ceil(Math.random()*101);   
+        arrayCartones.forEach(element => 
+        {
+            let matriz = element.getRowNumbers();
+
+            matriz.forEach(values => 
+            {
+                if (values.includes(bombo) == true)
+                {
+                   let indice = values.indexOf(bombo);
+
+                   values.splice(indice,1);
+          
+                }else if (values.length == 0)
+                {
+                    console.log('fila');
+                    //Esto del contador y values 0 no funciona
+                    contadorBingo += 1;
+                    values = 0;
+                }
+                //Esto tampoco funciona cometarlo si tal
+                else if (contadorBingo == NUMFILAS)
+                {
+                    console.log(matriz);
+                    console.log('bingo');
+                }
+              
+            });
+            
+        });
+        arrayBombo.push(bombo);
+        return arrayBombo;
+    }, 1);
+
+}
+
+function crearFilas()
+{
+    let fila = new Array();
+
+    for (let i = 0; i < NUMFILAS; i++) 
+    {
+        fila[i] =  new Array();
+        arrayRepeat = [];
+        for (let p = 0; p < NUMFILAS; p++) 
+        {
+            do
+            {
+                noRepeat =  Math.ceil(Math.random()*101);       
+            }
+            while(arrayRepeat.includes(noRepeat));
+
+            arrayRepeat.push(noRepeat);
+            fila[i].push(noRepeat);   
+        }
+    }
+    return fila;
+}
+
+function generarCarton(NUMEROCARTONES)
+{
+    let arrayCartones = [];
+    let numeroCartones = Math.ceil(Math.random()*10);
+
+    for (let u = 0; u < NUMEROCARTONES; u++)
+    {
+        let nombre = new Carton(u);
+        arrayCartones.push(nombre);
+    }
+    return arrayCartones;
+}
+
+generarNumero(generarCarton(NUMEROCARTONES));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function generarCarton()
+// {
+//     let arrayCartones = [];
+//     let numeroCartones = Math.ceil(Math.random()*10);
+
+//     for (let i = 0; i < 5 ; i++) 
+//     {
+//         let nombre  = new Carton(i);
+//         arrayCartones.push(nombre);
+//         let fila = []
+//         for (let j = 0; j < NUMFILAS; j++) 
+//         {
+//           nombre
+            
+//         }
+//         for (let p = 0; p < 5; p++) 
+//         {         
+//             fila.push(Math.ceil(Math.random()*11));
+//             nombre.getRowNumbers()[p]=(fila);
+//         }       
+        
+//     }
+//     return arrayCartones;
+// }
+</script>
